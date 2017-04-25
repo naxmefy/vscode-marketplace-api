@@ -1,0 +1,1 @@
+web: vscode-marketplace-api
