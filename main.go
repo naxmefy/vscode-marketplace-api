@@ -186,5 +186,4 @@ func main() {
 	r.HandleFunc("/{publisher}/{extension}", printMarketExtension).Methods("GET")
 	r.HandleFunc("/{publisher}/{extension}/{version:[0-9.]+}.VSIX", downloadMarketExtension).Methods("GET")
 	log.Fatal(http.ListenAndServe(":"+port, r))
-	log.Println("running on")
 }
