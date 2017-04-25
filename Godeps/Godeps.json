@@ -1,0 +1,29 @@
+{
+	"ImportPath": "github.com/naxmefy/vscode-marketplace-service",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v79",
+	"Deps": [
+		{
+			"ImportPath": "github.com/PuerkitoBio/goquery",
+			"Comment": "v1.1.0-3-ged7d758",
+			"Rev": "ed7d758e9a34ba1f55e8084e0d731448b46921a8"
+		},
+		{
+			"ImportPath": "github.com/andybalholm/cascadia",
+			"Rev": "349dd0209470eabd9514242c688c403c0926d266"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Comment": "v1.3.0-5-g599cba5",
+			"Rev": "599cba5e7b6137d46ddf58fb1765f5d928e69604"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html",
+			"Rev": "d212a1ef2de2f5d441c327b8f26cf3ea3ea9f265"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html/atom",
+			"Rev": "d212a1ef2de2f5d441c327b8f26cf3ea3ea9f265"
+		}
+	]
+}
