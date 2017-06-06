@@ -138,10 +138,14 @@ func getItem(r *http.Request) item {
 
 func printMarketExtension(w http.ResponseWriter, r *http.Request) {
 	item := getItem(r)
-	s, _ := json.Marshal(item)
-	w.WriteHeader(http.StatusOK)
+    js, err := json.Marshal(item)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+
     w.Header().Set("Content-Type", "application/json")
-	fmt.Fprintf(w, "%s", s)
+    w.Write(js)
 }
 
 func downloadMarketExtension(w http.ResponseWriter, r *http.Request) {
