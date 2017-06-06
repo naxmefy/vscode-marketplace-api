@@ -140,6 +140,7 @@ func printMarketExtension(w http.ResponseWriter, r *http.Request) {
 	item := getItem(r)
 	s, _ := json.Marshal(item)
 	w.WriteHeader(http.StatusOK)
+    w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, "%s", s)
 }
 
