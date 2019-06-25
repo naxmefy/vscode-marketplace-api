@@ -15,3 +15,9 @@
 
 # editors
 .idea
+
+# vscode
+.vscode
+
+debug
+go.sum

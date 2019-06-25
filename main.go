@@ -14,6 +14,12 @@ import (
 	"github.com/gorilla/mux"
 )
 
+const (
+	STATIC_DIR     = "/public/"
+	REL_STATIC_DIR = "./public/"
+	DEFAULT_PORT   = "8080"
+)
+
 type publisher struct {
 	PublisherId   string `json:"publisherId"`
 	PublisherName string
@@ -138,14 +144,14 @@ func getItem(r *http.Request) item {
 
 func printMarketExtension(w http.ResponseWriter, r *http.Request) {
 	item := getItem(r)
-    js, err := json.Marshal(item)
-    if err != nil {
-        http.Error(w, err.Error(), http.StatusInternalServerError)
-        return
-    }
+	js, err := json.Marshal(item)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-    w.Header().Set("Content-Type", "application/json")
-    w.Write(js)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
 }
 
 func downloadMarketExtension(w http.ResponseWriter, r *http.Request) {
@@ -184,11 +190,24 @@ func main() {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		port = "8080"
+		port = DEFAULT_PORT
 	}
+
+	fs := http.FileServer(http.Dir(REL_STATIC_DIR))
 
 	r := mux.NewRouter()
 	r.HandleFunc("/{publisher}/{extension}", printMarketExtension).Methods("GET")
 	r.HandleFunc("/{publisher}/{extension}/{version:[0-9.]+}.VSIX", downloadMarketExtension).Methods("GET")
+	r.
+		PathPrefix(STATIC_DIR).
+		Handler(http.StripPrefix(STATIC_DIR, fs))
+	r.PathPrefix("").Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "" {
+			//your default page
+			r.URL.Path = REL_STATIC_DIR + "index.html"
+		}
+
+		fs.ServeHTTP(w, r)
+	})).Methods("GET")
 	log.Fatal(http.ListenAndServe(":"+port, r))
 }
